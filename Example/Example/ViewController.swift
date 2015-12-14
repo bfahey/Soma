@@ -10,54 +10,64 @@ import UIKit
 
 import Soma
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    @IBOutlet weak var tableView: UITableView!
+class ViewController: UITableViewController {
     var channels: [Channel] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        self.tableView.estimatedRowHeight = 60
-//        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = 60.0
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         Soma.requestChannels { (channels, error) -> Void in
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            if let c = channels {
-                self.channels = c
-                self.tableView.reloadData()
+            if let channels = channels {
+                self.channels = channels
+
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.tableView.reloadData()
+                });
             }
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
-        
-        tableView.reloadData()
-        
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        
     }
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return channels.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+//    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+//        return 60
+//    }
+//    
+//    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+//        return UITableViewAutomaticDimension
+//    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
         
         let channel = channels[indexPath.row]
         cell.textLabel?.text = channel.title
         cell.detailTextLabel?.text = channel.description
+        cell.imageView?.imageFromURL(channel.imageURL120!)
         
         return cell
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let indexPath = self.tableView.indexPathForSelectedRow, let detail = segue.destinationViewController as? DetailViewController {
+            let channel = channels[indexPath.row]
+            detail.channel = channel
+        }
     }
 
 }

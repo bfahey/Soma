@@ -14,6 +14,7 @@
 		955EB2091C045E1A00F1C0A1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 955EB2071C045E1A00F1C0A1 /* LaunchScreen.storyboard */; };
 		955EB21C1C045E5200F1C0A1 /* Soma.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 955EB2161C045E2D00F1C0A1 /* Soma.framework */; };
 		9572E3FF1C1EB132009D9996 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9572E3FE1C1EB132009D9996 /* DetailViewController.swift */; };
+		9572E4051C1EBF9C009D9996 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9572E4041C1EBF9C009D9996 /* ImageLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,7 @@
 		955EB20A1C045E1A00F1C0A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		955EB2101C045E2D00F1C0A1 /* Soma.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Soma.xcodeproj; path = ../Soma.xcodeproj; sourceTree = "<group>"; };
 		9572E3FE1C1EB132009D9996 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		9572E4041C1EBF9C009D9996 /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 				955EB1FE1C045E1A00F1C0A1 /* AppDelegate.swift */,
 				955EB2001C045E1A00F1C0A1 /* ViewController.swift */,
 				9572E3FE1C1EB132009D9996 /* DetailViewController.swift */,
+				9572E4041C1EBF9C009D9996 /* ImageLoader.swift */,
 				955EB2021C045E1A00F1C0A1 /* Main.storyboard */,
 				955EB2051C045E1A00F1C0A1 /* Assets.xcassets */,
 				955EB2071C045E1A00F1C0A1 /* LaunchScreen.storyboard */,
@@ -193,6 +196,7 @@
 			files = (
 				9572E3FF1C1EB132009D9996 /* DetailViewController.swift in Sources */,
 				955EB2011C045E1A00F1C0A1 /* ViewController.swift in Sources */,
+				9572E4051C1EBF9C009D9996 /* ImageLoader.swift in Sources */,
 				955EB1FF1C045E1A00F1C0A1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -14,7 +14,7 @@ typealias JSONDictionary = [String: AnyObject]
 
 public func requestChannels(completion: ([Channel]?, NSError?) -> Void) -> NSURLSessionDataTask {
     let url = NSURL(string: "\(SomaBaseURL)/channels.json")!
-    let task = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
+    let task = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) in
         guard error == nil else {
             completion(nil, error)
             return
@@ -39,9 +39,9 @@ public func requestChannels(completion: ([Channel]?, NSError?) -> Void) -> NSURL
     return task
 }
 
-public func requestPlaylist(withID id:String, completion: (Playlist?, NSError?) -> Void) -> NSURLSessionDataTask {
+public func requestPlaylist(channelID id:String, completion: (Playlist?, NSError?) -> Void) -> NSURLSessionDataTask {
     let url = NSURL(string: "\(SomaBaseURL)/songs/\(id).json")!
-    let task = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
+    let task = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) in
         guard error == nil else {
             completion(nil, error)
             return
