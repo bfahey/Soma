@@ -8,21 +8,52 @@
 
 import UIKit
 import Soma
+import AVFoundation
 
 class DetailViewController: UITableViewController {
     var channel: Channel?
     var playlist: Playlist?
+    var player: AVPlayer?
+    var currentPlaylistURL: PlaylistURL? {
+        didSet {
+            updatePlayButton()
+        }
+    }
+    var isPlaying = false
+    
+    func toggleRadio() {
+        guard let url = currentPlaylistURL?.url else { return }
+
+        if isPlaying == false {
+            RadioPlayer.sharedInstance.play(url)
+            isPlaying = true
+        } else {
+            RadioPlayer.sharedInstance.pause()
+            isPlaying = false
+        }
+        
+        updatePlayButton()
+    }
+    
+    func updatePlayButton() {
+        let style: UIBarButtonSystemItem = isPlaying ? .Pause : .Play
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: style, target: self, action: "toggleRadio")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.title = self.channel?.title
         
-        guard let channelID = self.channel?.id else { return }
+        guard let channel = self.channel else { return }
         
+        // Get the `high` quality playlist URL.
+        let mid = channel.playlists.count / 2
+        self.currentPlaylistURL = channel.playlists[mid]
+            
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
 
-        Soma.requestPlaylist(channelID: channelID) { (playlist, error) in
+        Soma.requestPlaylist(channelID: channel.id) { (playlist, error) in
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
 
             if (playlist != nil) {
@@ -54,5 +85,7 @@ class DetailViewController: UITableViewController {
         return cell
     }
     
-
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
 }

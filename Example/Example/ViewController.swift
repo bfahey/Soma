@@ -10,14 +10,18 @@ import UIKit
 
 import Soma
 
+class ChannelTableViewCell: UITableViewCell {
+    @IBOutlet weak var channelImageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
+}
+
 class ViewController: UITableViewController {
     var channels: [Channel] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.tableView.rowHeight = 60.0
-        
+    
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         Soma.requestChannels { (channels, error) -> Void in
@@ -44,21 +48,16 @@ class ViewController: UITableViewController {
         return channels.count
     }
     
-//    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        return 60
-//    }
-//    
-//    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        return UITableViewAutomaticDimension
-//    }
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! ChannelTableViewCell
         
         let channel = channels[indexPath.row]
-        cell.textLabel?.text = channel.title
-        cell.detailTextLabel?.text = channel.description
-        cell.imageView?.imageFromURL(channel.imageURL120!)
+        cell.titleLabel?.text = channel.title
+        cell.descriptionLabel?.text = channel.description
+
+        if let imageURL = channel.imageURL120 {
+            cell.channelImageView?.imageFromURL(imageURL)
+        }
         
         return cell
     }
